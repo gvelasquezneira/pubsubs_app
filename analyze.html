@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}Analyze Prices | Publix Products Database{% endblock %}
+
+{% block content %}
+<div class="hero-section mb-4">
+    <div class="container">
+        <h1 class="h2"><i class="price"></i>Price Analysis Across Stores</h1>
+        <p class="lead mb-0">Compare product prices by store and category.</p>
+        <p class="lead mb-0"><b>Please select a store AND category to view price analysis.</b></p>
+            
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-light">
+                <i class="fas fa-store me-2"></i> Filter by Store
+            </div>
+            <div class="card-body">
+                <div class="d-flex flex-wrap">
+                    <a href="{{ url_for('analyze', category=selected_category) }}"
+                       class="btn btn-sm {% if not selected_store %}btn-success{% else %}btn-outline-success{% endif %} me-2 mb-2">
+                        All Stores
+                    </a>
+                    {% for store in stores %}
+                    <a href="{{ url_for('analyze', store=store.store_id, category=selected_category) }}"
+                       class="btn btn-sm {% if selected_store == store.store_id %}btn-success{% else %}btn-outline-success{% endif %} me-2 mb-2"
+                       title="{{ store.store_id }}">
+                        {{ store.location }}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-light">
+                <i class="fas fa-filter me-2"></i> Filter by Category
+            </div>
+            <div class="card-body">
+                <div class="d-flex flex-wrap">
+                    <a href="{{ url_for('analyze', store=selected_store) }}"
+                       class="btn btn-sm {% if not selected_category %}btn-success{% else %}btn-outline-success{% endif %} me-2 mb-2">
+                        All Categories
+                    </a>
+                    {% for category in categories %}
+                    <a href="{{ url_for('analyze', store=selected_store, category=category) }}"
+                       class="btn btn-sm {% if selected_category == category %}btn-success{% else %}btn-outline-success{% endif %} me-2 mb-2">
+                        {{ category }}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if analysis %}
+
+<div class="card">
+    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+        <span>
+            <i class="fas fa-chart-bar me-2"></i>
+            Price Analysis
+            {% if selected_store %}
+                for {{ stores | selectattr('store_id', 'equalto', selected_store) | map(attribute='location') | list | first }}
+            {% endif %}
+            {% if selected_category %}in {{ selected_category }}{% endif %}
+        </span>
+        <span class="badge bg-secondary">Showing {{ analysis|length }} results</span>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Your Store Price</th>
+                        <th>Other Stores Avg Price</th>
+                        <th>Difference</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in analysis %}
+                    <tr>
+                        <td>{{ row.product_name }}</td>
+                        <td class="price">${{ "%.2f"|format(row.your_price) }}</td>
+                        <td class="price">${{ "%.2f"|format(row.other_avg_price) }}</td>
+                        <td>
+                            {% if row.diff > 0 %}
+                                <span class="text-success">+${{ "%.2f"|format(row.diff) }}</span>
+                            {% elif row.diff < 0 %}
+                                <span class="text-danger">-${{ "%.2f"|format(-row.diff) }}</span>
+                            {% else %}
+                                $0.00
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% else %}
+    <div class="alert alert-info mt-4">
+        Please select a store and category to view price analysis.
+    </div>
+{% endif %}
+{% endblock %}

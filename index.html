@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Publix Cities{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="container">
+        <h1 class="display-4"><i class="fas fa-city me-2"></i>Browse Stores by City</h1>
+        <p class="lead">Select a city to view store locations</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        {% if cities %}
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        {% for city in cities %}
+                        <div class="col-md-4 col-sm-6 mb-3">
+                            <a href="/city/{{ city }}" class="text-decoration-none">
+                                <div class="card h-100 shadow-sm">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-building mb-3" style="font-size: 2rem; color: #007831;"></i>
+                                        <h5 class="card-title">{{ city }}</h5>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="alert alert-warning">
+                <i class="fas fa-exclamation-triangle me-2"></i> No cities found in the database.
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

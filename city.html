@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}{{ city }} Stores{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/"><i class="fas fa-home"></i> Cities</a></li>
+        <li class="breadcrumb-item active">{{ city }}</li>
+    </ol>
+</nav>
+
+<div class="hero-section">
+    <div class="container">
+        <h1 class="display-4"><i class="fas fa-store-alt me-2"></i>Stores in {{ city }}</h1>
+        <p class="lead">{{ locations|length }} store locations found</p>
+    </div>
+</div>
+
+{% if locations %}
+    <div class="row">
+        {% for location in locations %}
+            <div class="col-lg-6 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="fas fa-store me-2 text-success"></i> {{ location.Location }}
+                        </h5>
+                        <a href="/location/{{ location.Store_ID }}" class="btn btn-outline-success stretched-link">
+                            <i class="fas fa-shopping-basket me-1"></i> Browse Products
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-warning">
+        <i class="fas fa-exclamation-triangle me-2"></i> No store locations found in {{ city }}.
+    </div>
+{% endif %}
+{% endblock %}

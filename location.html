@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Products at {{ location.Location }}{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/"><i class="fas fa-home"></i> Cities</a></li>
+        <li class="breadcrumb-item"><a href="/city/{{ location.City }}">{{ location.City }}</a></li>
+        <li class="breadcrumb-item active">Store {{ location.Store_ID }}</li>
+    </ol>
+</nav>
+
+<div class="hero-section">
+    <div class="container">
+        <h1 class="h2"><i class="fas fa-store me-2"></i>{{ location.Location }}</h1>
+        <p class="lead mb-0">{{ location.City }}</p>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header bg-light">
+                <i class="fas fa-info-circle me-2"></i> Store Information
+            </div>
+            <div class="card-body">
+                <p><strong><i class="fas fa-map-marker-alt me-2"></i>Address:</strong> {{ location.Location }}</p>
+                <p><strong><i class="fas fa-city me-2"></i>City:</strong> {{ location.City }}</p>
+                <p class="mt-3">
+                    <span class="badge bg-success">{{ product_count }} products available</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-light">
+                <i class="fas fa-filter me-2"></i> Filter by Category
+            </div>
+            <div class="card-body">
+                <div class="d-flex flex-wrap">
+                    <a href="/location/{{ location.Store_ID }}" 
+                       class="btn btn-sm {% if not current_category %}btn-success{% else %}btn-outline-success{% endif %} me-2 mb-2">
+                        All Categories
+                    </a>
+                    {% for category in categories %}
+                    <a href="/location/{{ location.Store_ID }}/category/{{ category }}" 
+                       class="btn btn-sm {% if current_category == category %}btn-success{% else %}btn-outline-success{% endif %} me-2 mb-2">
+                        {{ category }}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+        <span>
+            <i class="fas fa-shopping-basket me-2"></i> 
+            Products {% if current_category %}in {{ current_category }}{% endif %}
+        </span>
+        <span class="badge bg-secondary">Showing {{ products|length }} of {{ product_count }}</span>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Size</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <td>{{ product.Product_Name }}</td>
+                        <td><span class="badge bg-success">{{ product.Category }}</span></td>
+                        <td class="price">${{ "%.2f"|format(product.Price) }}</td>
+                        <td>{{ product.Size }}</td>
+                        <td>{{ product.Date }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

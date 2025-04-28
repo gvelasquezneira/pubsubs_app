@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Publix Products Database{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .navbar-brand {
+            font-weight: bold;
+            color: #007831 !important;
+        }
+        .hero-section {
+            background: linear-gradient(to right, #007831, #00a551);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+        .card {
+            transition: transform 0.3s;
+            margin-bottom: 20px;
+            height: 100%;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        footer {
+            background-color: #f8f9fa;
+            padding: 1.5rem 0;
+            margin-top: 3rem;
+        }
+        .table {
+            vertical-align: middle;
+        }
+        .breadcrumb {
+            margin-bottom: 2rem;
+        }
+        .city-list, .category-list, .location-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .city-list li, .category-list li {
+            margin-bottom: 10px;
+        }
+        .badge-category {
+            background-color: #007831;
+            color: white;
+        }
+        .price {
+            font-weight: bold;
+            color: #007831;
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-shopping-cart me-2"></i>
+                Publix Products Database
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="fas fa-city me-1"></i> Cities</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/categories"><i class="fas fa-tags me-1"></i> Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/analyze"><i class="fas fa-chart-bar me-1"></i> Analyze</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main class="container py-4">
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="text-center">
+        <div class="container">
+            <p class="mb-1">Publix Products Database</p>
+            <p class="text-muted small">Data for educational purposes only</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
