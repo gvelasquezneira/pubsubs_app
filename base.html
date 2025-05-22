@@ -58,7 +58,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="/">
+             <a class="navbar-brand" href="https://gvelasquezneira.press/super-duper-pubsubs/">
                 <i class="fas fa-shopping-cart me-2"></i>
                 Publix Products Database
             </a>
@@ -68,13 +68,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/"><i class="fas fa-city me-1"></i> Cities</a>
+                        <a class="nav-link" href="{{ url_for('index') }}"><i class="fas fa-city me-1"></i> Cities</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/categories"><i class="fas fa-tags me-1"></i> Categories</a>
+                        <a class="nav-link" href="{{ url_for('list_categories') }}"><i class="fas fa-tags me-1"></i> Categories</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/analyze"><i class="fas fa-chart-bar me-1"></i> Analyze</a>
+                        <a class="nav-link" href="{{ url_for('analyze') }}"><i class="fas fa-chart-bar me-1"></i> Analyze</a>
                     </li>
                 </ul>
             </div>
