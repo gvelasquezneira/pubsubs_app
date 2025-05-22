@@ -4,8 +4,10 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, make_response, request
 import csv
 from io import StringIO
+import urllib.parse
 
 app = Flask(__name__)
+application = app
 db = SQLAlchemy()
 
 db_path = os.path.abspath('publix.db')
@@ -54,13 +56,14 @@ def list_categories():
 @app.route('/city/<city_name>')
 def view_city(city_name):
     try:
+        decoded_city_name = urllib.parse.unquote(city_name)
         query = text("""
             SELECT DISTINCT "Store ID" as store_id, Location 
             FROM products 
             WHERE City = :city_name
             ORDER BY Location
         """)
-        result = db.session.execute(query, {"city_name": city_name})
+        result = db.session.execute(query, {"city_name": decoded_city_name})
         location_list = []
         for row in result:
             store_id = row[0]
@@ -71,7 +74,7 @@ def view_city(city_name):
                     'Location': location
                 })
         return render_template('city.html', 
-                             city=city_name,
+                             city=decoded_city_name,
                              locations=location_list)
     except Exception as e:
         return render_template('error.html', 
@@ -350,4 +353,4 @@ def analyze():
                               heading='Error analyzing prices',
                               error_message=str(e))
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
