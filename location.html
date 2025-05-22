@@ -5,7 +5,7 @@
 {% block content %}
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/"><i class="fas fa-home"></i> Cities</a></li>
+        <li class="breadcrumb-item"><a href="https://gvelasquezneira.press/super-duper-pubsubs/"><i class="fas fa-home"></i> Cities</a></li>
         <li class="breadcrumb-item"><a href="/city/{{ location.City }}">{{ location.City }}</a></li>
         <li class="breadcrumb-item active">Store {{ location.Store_ID }}</li>
     </ol>
@@ -41,12 +41,12 @@
             </div>
             <div class="card-body">
                 <div class="d-flex flex-wrap">
-                    <a href="/location/{{ location.Store_ID }}" 
-                       class="btn btn-sm {% if not current_category %}btn-success{% else %}btn-outline-success{% endif %} me-2 mb-2">
+                    <a href="{{ url_for('view_location', store_id=location.Store_ID) }}" 
+                    class="btn btn-sm {% if not current_category %}btn-success{% else %}btn-outline-success{% endif %} me-2 mb-2">
                         All Categories
                     </a>
                     {% for category in categories %}
-                    <a href="/location/{{ location.Store_ID }}/category/{{ category }}" 
+                    <a href="{{ url_for('view_location_by_category', store_id=location.Store_ID, category_name=category) }}"
                        class="btn btn-sm {% if current_category == category %}btn-success{% else %}btn-outline-success{% endif %} me-2 mb-2">
                         {{ category }}
                     </a>
