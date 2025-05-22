@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Products at {{ location.Location }}</title>
+</head>
+<body>
+    <h1>Products at {{ location.Location }}</h1>
+    
+    <p><a href="https://gvelasquezneira.press/super-duper-pubsubs/">All Cities</a> &gt; <a href="/city/{{ location.City }}">{{ location.City }}</a> &gt; Current Store</p>
+    
+    <div>
+        <h2>Store Information</h2>
+        <p><strong>Store ID:</strong> {{ location.Store_ID }}</p>
+        <p><strong>Address:</strong> {{ location.Location }}</p>
+        <p><strong>City:</strong> {{ location.City }}</p>
+    </div>
+    
+    <h2>Products Available (showing {{ products|length }} of {{ product_count }})</h2>
+    
+    <p>Filter by category: 
+        <a href="/location/{{ location.Store_ID }}">All</a> | 
+        {% for category in categories %}
+        <a href="/location/{{ location.Store_ID }}/category/{{ category }}">{{ category }}</a> | 
+        {% endfor %}
+    </p>
+    
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Category</th>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Size</th>
+            <th>Date</th>
+        </tr>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.ID }}</td>
+            <td>{{ product.Category }}</td>
+            <td>{{ product.Product_Name }}</td>
+            <td>${{ "%.2f"|format(product.Price) }}</td>
+            <td>{{ product.Size }}</td>
+            <td>{{ product.Date }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
