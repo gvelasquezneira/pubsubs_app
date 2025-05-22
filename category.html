@@ -5,7 +5,7 @@
 {% block content %}
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/"><i class="fas fa-home"></i> Cities</a></li>
+        <li class="breadcrumb-item"><a href="https://gvelasquezneira.press/super-duper-pubsubs/"><i class="fas fa-home"></i> Cities</a></li>
         <li class="breadcrumb-item"><a href="/categories">Categories</a></li>
         <li class="breadcrumb-item active">{{ category_name }}</li>
     </ol>
@@ -40,7 +40,7 @@
                     <tr>
                         <td>{{ product.Product_Name }}</td>
                         <td>
-                            <a href="/location/{{ product.Store_ID }}">
+                            <a href="{{ url_for('view_location', store_id=product.Store_ID) }}">
                                 {{ product.Location.split(',')[0] }}
                             </a>
                         </td>
