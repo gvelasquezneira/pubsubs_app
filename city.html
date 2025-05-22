@@ -5,7 +5,8 @@
 {% block content %}
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/"><i class="fas fa-home"></i> Cities</a></li>
+        <li class="breadcrumb-item"><a href="https://gvelasquezneira.press/super-duper-pubsubs/">
+            <i class="fas fa-home"></i> Cities</a></li>
         <li class="breadcrumb-item active">{{ city }}</li>
     </ol>
 </nav>
@@ -26,7 +27,7 @@
                         <h5 class="card-title">
                             <i class="fas fa-store me-2 text-success"></i> {{ location.Location }}
                         </h5>
-                        <a href="/location/{{ location.Store_ID }}" class="btn btn-outline-success stretched-link">
+                        <a href="{{ url_for('view_location', store_id=location.Store_ID) }}" class="btn btn-outline-success stretched-link">
                             <i class="fas fa-shopping-basket me-1"></i> Browse Products
                         </a>
                     </div>
